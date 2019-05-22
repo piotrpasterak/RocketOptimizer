@@ -16,12 +16,12 @@ def print_plot():
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    X = np.arange(1, 100, 1)
-    Y = np.arange(1, 100, 1)
+    X = np.arange(1, 100000, 1)
+    Y = np.arange(1, 8, 0.5)
     X, Y = np.meshgrid(X, Y)
     Z = goal_f([X,Y])
 
-    ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False)
+    ax.plot_surface(X, Y, Z, linewidth=0, antialiased=True)
 
     plt.show()
 
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     """Main script loop.
     """
 
-    fopt = optimize.fmin_bfgs(goal_f, [100, 100])
+    fopt = optimize.fmin_bfgs(goal_f, [100000, 10])
 
     print_plot()
 
