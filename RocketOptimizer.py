@@ -30,7 +30,8 @@ if __name__ == '__main__':
     """Main script loop.
     """
 
-    fopt = optimize.fmin_bfgs(goal_f, [100000, 10])
+    fopt = optimize.minimize(goal_f, [100000, 10], method="Nelder-Mead")
+    print(fopt)
 
     print_plot()
 
