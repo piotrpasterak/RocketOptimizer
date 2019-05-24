@@ -13,24 +13,30 @@ Przyjęte ograniczenia wynikuja z wlasciwości fizycznych (średnica musi być d
 oraz z wlasciwosci funkcji celu (wartości rzeczywiste dla V)
 
 ##Rozwiazanie
-przedstwawione w postaci x(R,r)
+przedstawione w postaci V, x(r,R)
 
-Dla metody COBYLA
+Dla metody COBYLA (z punktem poczatkowym [5,10])
 fun: 27212.467859518427
 x: array([ 2.5 , 11.25])
 
 zaskakujaco COBYLA zwraca blad: 
 'Did not converge to a solution satisfying the constraints"
 Niemniej rozwiazanie jest w granicach i jest lepsze niz w przypadku trust-constr. 
+Wyniki te zostaly uzyte jako wartosc poczatkowa dla nsatepnego algorytmu (trust-constr).
 
-Dla metody trust-constr
+Dla metody trust-constr (z wynikami metody COBYLA jako punktem poczatkowym)
+fun: 24529.63400799457
+x: array([ 2.42531348, 11.11908411])
+
+Dla metody trust-constr (z punktem poczatkowym [5,10])
 fun: 75329.42647468536
 x: array([ 4.76232147, 10.12042058])
 
-Uzyskane wyniki wskazuja ze algorytm COBYLA(Constrained Optimization BY Linear Approximation) jest lepsza metoda dla tego problemu.
-Wynika to z charakteru funkcji celu która jest zbliżona do liniowej w znacznacej czesci wyznaczonej dzedziny.
+###Ostatecznie:
+r = 2.42531348
+R = 11.11908411
+V = 24529.63400799457
 
-Ostatecznie:
-r = 2.5
-R = 11.25
-V = 27212.467859518427
+###Wnioski
+Przy pomocy algorytmu COBYLA nie uzyskano wartosci optymalnej, zaś dla trust-constr wynik był gorszy.
+Z tego powodu wybrano wariant kaskadowy dzieki czemu usyskano wyniki lepsze niz w obu algorytmach.
