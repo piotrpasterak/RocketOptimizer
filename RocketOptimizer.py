@@ -74,7 +74,7 @@ if __name__ == '__main__':
         The previously described equality constrained SQP method is used to solve the subproblems with increasing levels of accuracy as the iterate gets closer to a solution.
         """)
 
-    result_trust = optimize.minimize(goal_f, [5, 10], method="trust-constr", constraints=cons)
+    result_trust = optimize.minimize(goal_f, [2.5, 11.25], method="trust-constr", constraints=cons)
     print(result_trust)
 
     print_plot([[result_cobyla.x[0], result_cobyla.x[1], result_cobyla.fun], [result_trust.x[0], result_trust.x[1], result_trust.fun]])
