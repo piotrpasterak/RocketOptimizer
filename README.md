@@ -16,18 +16,21 @@ oraz z wlasciwosci funkcji celu (wartości rzeczywiste dla V)
 przedstwawione w postaci x(R,r)
 
 Dla metody COBYLA
-fun: 3660.0713149354438
-x: array([99.91415487,  0.6065698])
+fun: 27212.467859518427
+x: array([ 2.5 , 11.25])
+
+zaskakujaco COBYLA zwraca blad: 
+'Did not converge to a solution satisfying the constraints"
+Niemniej rozwiazanie jest w granicach i jest lepsze niz w przypadku trust-constr. 
 
 Dla metody trust-constr
-fun: 209129.62009804428
-x: array([99.25333925,  1.86799574])
+fun: 75329.42647468536
+x: array([ 4.76232147, 10.12042058])
 
 Uzyskane wyniki wskazuja ze algorytm COBYLA(Constrained Optimization BY Linear Approximation) jest lepsza metoda dla tego problemu.
-Także czasowo algorytm COBYLA generuje wyniki szybciej.
-Wynika to z charakteru funkcji celu która jest mocno liniowa w znacznacej czesci swojej dzedziny.
+Wynika to z charakteru funkcji celu która jest zbliżona do liniowej w znacznacej czesci wyznaczonej dzedziny.
 
 Ostatecznie:
-r = 0.6065698
-R = 99.91415487
-V = 3660.0713149354438
+r = 2.5
+R = 11.25
+V = 27212.467859518427

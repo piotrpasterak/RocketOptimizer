@@ -5,15 +5,16 @@ from scipy import optimize
 
 y_1 = 1.11 * 10**(-9)
 y_2 = 1.48 * 10**9
-y_3 = 4.88 * 10**21
+y_3 = 1.49 * 10**5
+y_4 = 4.88 * 10**21
 
 
 def goal_f(r):
-    return y_1 * r[0]**2 * r[1]**3 * (y_2 + np.sqrt(y_2**2 - (y_3 / (r[0]**2 * r[1]**3))))
+    return y_1 * r[0]**2 * r[1]**3 * (y_2 - y_3 * (r[1]**2/r[0]**2) + np.sqrt((y_3 * (r[1]**2/r[0]**2) - y_2)**2 - (y_4 / (r[0]**2 * r[1]**3))))
 
 
 def restrict_f(x):
-    return y_2**2 - (y_3 / (x[0]**2 * x[1]**3))
+    return (y_3 * (x[1]**2/x[0]**2) - y_2)**2 - (y_4 / (x[0]**2 * x[1]**3))
 
 
 def print_plot(solution):
@@ -46,7 +47,11 @@ if __name__ == '__main__':
 
     cons = [{'type': 'ineq', 'fun': restrict_f},
             {'type': 'ineq', 'fun': lambda x: x[0]},
-            {'type': 'ineq', 'fun': lambda x: x[1]}]
+            {'type': 'ineq', 'fun': lambda x: x[0] - 8},
+            {'type': 'ineq', 'fun': lambda x: 2.5 - x[1]},
+            {'type': 'ineq', 'fun': lambda x: x[1] - 20},
+            {'type': 'ineq', 'fun': lambda x: x[0] - x[1]}
+            ]
 
     print(
         """
@@ -57,7 +62,7 @@ if __name__ == '__main__':
         """
     )
 
-    result_cobyla = optimize.minimize(goal_f, [100, 10],method="COBYLA", constraints=cons)
+    result_cobyla = optimize.minimize(goal_f, [5, 10], method="COBYLA", constraints=cons)
     print(result_cobyla)
 
     print(
@@ -67,15 +72,9 @@ if __name__ == '__main__':
         It is the most versatile constrained minimization algorithm implemented in SciPy and the most appropriate for large-scale problems.
         This interior point algorithm, in turn, solves inequality constraints by introducing slack variables and solving a sequence of equality-constrained barrier problems for progressively smaller values of the barrier parameter.
         The previously described equality constrained SQP method is used to solve the subproblems with increasing levels of accuracy as the iterate gets closer to a solution.
-    
-        Function plot suggesting that function is close to be linear, at least close to this in significant number of regions.
-        That could means that 'trust-constr' method is not best choice for this case (bases on gradient and is time consuming here.).
-        
-        It takes long time, please be waiting.
         """)
 
-    result_trust = optimize.minimize(goal_f, [100, 10], jac='2-point', method="trust-constr", constraints=cons,
-                             options={'maxiter': 100000})
+    result_trust = optimize.minimize(goal_f, [5, 10], method="trust-constr", constraints=cons)
     print(result_trust)
 
     print_plot([[result_cobyla.x[0], result_cobyla.x[1], result_cobyla.fun], [result_trust.x[0], result_trust.x[1], result_trust.fun]])
