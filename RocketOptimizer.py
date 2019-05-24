@@ -16,12 +16,12 @@ def restrict_f(x):
     return y_2**2 - (y_3 / (x[0]**2 * x[1]**3))
 
 
-def print_plot():
+def print_plot(solution):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    X = np.arange(10, 40000, 100)
-    Y = np.arange(3, 40, 1)
+    X = np.arange(5, 40000, 100)
+    Y = np.arange(0.1, 40, 0.1)
     X, Y = np.meshgrid(X, Y)
     plt.title('Funkcja celu rakiety Saturn V')
     ax.set_xlabel("R")
@@ -29,7 +29,11 @@ def print_plot():
     ax.set_zlabel("V")
     Z = goal_f([X, Y])
 
+    pointx = [solution[0][0], solution[1][0]]
+    pointy= [solution[0][1], solution[1][1]]
+    pointz = [solution[0][2], solution[1][2]]
     ax.plot_surface(X, Y, Z, linewidth=0, antialiased=True)
+    ax.scatter(pointx, pointy, pointz, c="r")
     plt.show()
 
 
@@ -74,4 +78,4 @@ if __name__ == '__main__':
                              options={'maxiter': 100000})
     print(result_trust)
 
-    print_plot()
+    print_plot([[result_cobyla.x[0], result_cobyla.x[1], result_cobyla.fun], [result_trust.x[0], result_trust.x[1], result_trust.fun]])
