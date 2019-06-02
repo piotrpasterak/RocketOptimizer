@@ -21,20 +21,21 @@ def print_plot(solution):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    X = np.arange(5, 40000, 100)
-    Y = np.arange(0.1, 40, 0.1)
+    Y = np.arange(1, 20, 0.001)
+    X = np.arange(0.1, 5, 0.001)
     X, Y = np.meshgrid(X, Y)
     plt.title('Funkcja celu rakiety Saturn V')
-    ax.set_xlabel("R")
-    ax.set_ylabel("r")
+    ax.set_xlabel("r")
+    ax.set_ylabel("R")
     ax.set_zlabel("V")
     Z = goal_f([X, Y])
 
-    pointx = [solution[0][0], solution[1][0]]
-    pointy= [solution[0][1], solution[1][1]]
-    pointz = [solution[0][2], solution[1][2]]
     ax.plot_surface(X, Y, Z, linewidth=0, antialiased=True)
-    ax.scatter(pointx, pointy, pointz, c="r")
+    ax.scatter(solution[0][0], solution[0][1], solution[0][2] , marker='^',  c="r", label ='result COBYLA')
+    ax.scatter(solution[1][0], solution[1][1], solution[1][2], marker='o', c="y", label ='result trust-constr')
+
+    plt.legend()
+
     plt.show()
 
 
